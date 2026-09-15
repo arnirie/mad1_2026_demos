@@ -8,7 +8,7 @@ class SampleScreen extends StatefulWidget {
 }
 
 class _SampleScreenState extends State<SampleScreen> {
-  var boxColor = Colors.blue;
+  var boxColor = Colors.red;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,11 @@ class _SampleScreenState extends State<SampleScreen> {
         child: GestureDetector(
           onTap: () {
             setState(() {
-              //reexecutes the build method
-              boxColor = Colors.yellow;
+              // if (boxColor == Colors.red)
+              //   boxColor = Colors.yellow;
+              // else
+              //   boxColor = Colors.red;
+              boxColor = boxColor == Colors.red ? Colors.yellow : Colors.red;
             });
             print('tapped the box');
           },
