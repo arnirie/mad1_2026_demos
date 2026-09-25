@@ -36,10 +36,17 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: isFinished
-              ? Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Text('$score'),
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: .center,
+                    children: [
+                      Text('You\'ve Got'),
+                      Text(
+                        '$score',
+                        style: TextStyle(fontSize: 36, fontWeight: .w500),
+                      ),
+                    ],
+                  ),
                 )
               : Column(
                   children: [
