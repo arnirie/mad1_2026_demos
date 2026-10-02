@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'screens/todo_screen.dart';
 
-void main(){
+void main() {
   runApp(const TodoApp());
 }
 
@@ -9,6 +10,6 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MaterialApp(home: TodoScreen(), debugShowCheckedModeBanner: false);
   }
 }
