@@ -55,12 +55,69 @@ class _TodoScreenState extends State<TodoScreen> {
                   itemCount: items.length,
                   itemBuilder: (_, index) {
                     // return Card(child: Text(items[index]));
-                    return Card(
-                      child: ListTile(
-                        title: Text(items[index]),
-                        subtitle: Text('Sub'),
-                        trailing: Icon(Icons.delete),
-                        leading: Icon(Icons.check),
+                    return Dismissible(
+                      key: UniqueKey(),
+                      background: Container(color: Colors.red),
+                      secondaryBackground: Container(
+                        padding: .only(right: 18),
+                        color: Colors.blue,
+                        alignment: .centerEnd,
+                        child: Icon(Icons.delete, color: Colors.red),
+                      ),
+                      direction: .endToStart,
+                      onDismissed: (direction) {
+                        // if(direction == DismissDirection.endToStart)
+                        items.removeAt(index);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Item deleted.'),
+                            action: SnackBarAction(
+                              label: 'UNDO',
+                              onPressed: () {},
+                            ),
+                          ),
+                        );
+                      },
+                      confirmDismiss: (direction) async {
+                        // if(direction == DismissDirection.endToStart)
+                        final result = await showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            content: Text('Do you want to delete this item?'),
+                            title: Text('Confirm to delete'),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop('yes');
+                                },
+                                child: Text('YES'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Cancel'),
+                              ),
+                            ],
+                          ),
+                        );
+                        print(result);
+                        if (result == null) return false;
+                        return true;
+                      },
+                      child: Card(
+                        child: ListTile(
+                          title: Text(items[index]),
+                          subtitle: Text('Sub'),
+                          // trailing: IconButton(
+                          //   onPressed: () {
+                          //     items.removeAt(index);
+                          //     setState(() {});
+                          //   },
+                          //   icon: Icon(Icons.delete),
+                          // ),
+                          leading: Icon(Icons.check),
+                        ),
                       ),
                     );
                   },
