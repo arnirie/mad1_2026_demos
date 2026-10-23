@@ -21,20 +21,78 @@ class _TodoScreenState extends State<TodoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: .stretch,
-            children: [
-              TextField(
+      appBar: AppBar(
+        title: Text('My Todo List'),
+        backgroundColor: Colors.amber,
+        foregroundColor: Colors.white,
+      ),
+      floatingActionButtonLocation: .endFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: Text('Add Item'),
+              content: TextField(
                 controller: itemCtrl,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   label: Text('Todo Item'),
                 ),
               ),
-              ElevatedButton(onPressed: addItem, child: Text('ADD')),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    addItem();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Add'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancel'),
+                ),
+              ],
+            ),
+          );
+        },
+        backgroundColor: Colors.amber,
+        foregroundColor: Colors.white,
+        child: Icon(Icons.add),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: .stretch,
+            children: [
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: TextField(
+              //         controller: itemCtrl,
+              //         decoration: InputDecoration(
+              //           border: OutlineInputBorder(),
+              //           label: Text('Todo Item'),
+              //         ),
+              //       ),
+              //     ),
+              //     SizedBox(width: 12),
+              //     GestureDetector(
+              //       child: CircleAvatar(child: Icon(Icons.add)),
+              //       onTap: addItem,
+              //     ),
+              //     // ElevatedButton(onPressed: addItem, child: Icon(Icons.add)),
+              //     // ElevatedButton.icon(
+              //     //   onPressed: addItem,
+              //     //   label: Text(''),
+              //     //   icon: Icon(Icons.add),
+              //     // ),
+              //   ],
+              // ),
+
               Expanded(
                 // child: SingleChildScrollView(
                 //   child: Column(
@@ -67,16 +125,28 @@ class _TodoScreenState extends State<TodoScreen> {
                       direction: .endToStart,
                       onDismissed: (direction) {
                         // if(direction == DismissDirection.endToStart)
-                        items.removeAt(index);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Item deleted.'),
-                            action: SnackBarAction(
-                              label: 'UNDO',
-                              onPressed: () {},
+
+                        setState(() {
+                          String removedItem = items[index];
+                          items.removeAt(index);
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(seconds: 3),
+                              content: Text('Item ($removedItem) deleted.'),
+                              action: SnackBarAction(
+                                label: 'UNDO',
+                                onPressed: () {
+                                  setState(() {
+                                    // items.add(removedItem);
+                                    items.insert(index, removedItem);
+                                    print(removedItem);
+                                  });
+                                },
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        });
                       },
                       confirmDismiss: (direction) async {
                         // if(direction == DismissDirection.endToStart)
@@ -108,7 +178,8 @@ class _TodoScreenState extends State<TodoScreen> {
                       child: Card(
                         child: ListTile(
                           title: Text(items[index]),
-                          subtitle: Text('Sub'),
+                          leading: CircleAvatar(child: Text('${index + 1}')),
+                          // subtitle: Text('Sub'),
                           // trailing: IconButton(
                           //   onPressed: () {
                           //     items.removeAt(index);
@@ -116,7 +187,7 @@ class _TodoScreenState extends State<TodoScreen> {
                           //   },
                           //   icon: Icon(Icons.delete),
                           // ),
-                          leading: Icon(Icons.check),
+                          // leading: Icon(Icons.check),
                         ),
                       ),
                     );
