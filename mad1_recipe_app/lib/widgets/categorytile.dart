@@ -11,9 +11,9 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => RecipeListScreen())),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => RecipeListScreen(category: category)),
+      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10), //rounded corners
@@ -24,9 +24,14 @@ class CategoryTile extends StatelessWidget {
           ),
         ),
         // color: category.color,
-        child: Text(
-          category.name,
-          style: TextStyle(fontSize: 26, fontWeight: .w600),
+        child: FittedBox(
+          fit: .scaleDown,
+          child: Text(
+            category.name,
+            // overflow: .ellipsis,
+            // maxLines: 1,
+            style: TextStyle(fontSize: 26, fontWeight: .w600),
+          ),
         ),
         padding: .all(12),
       ),

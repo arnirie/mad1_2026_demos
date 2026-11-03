@@ -6,8 +6,8 @@ void main() {
 }
 
 //TODO: Recipe App
-// 1) Category List Screen
-// 2) Categories (data list)
+//! 1) Category List Screen
+//! 2) Categories (data list)
 // 3) Recipe Screen
 // 4) Recipies (data list)
 // 5) View individual recipies
