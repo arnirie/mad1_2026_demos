@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mad1_shopping_app/screens/accounts.dart';
 import 'package:mad1_shopping_app/screens/product_listing.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class ShoppingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ProductListingScreen(),
+      home: AccountsScreen(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
     );

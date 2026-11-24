@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mad1_shopping_app/data/products.dart';
 import 'package:mad1_shopping_app/models/product.dart';
+import 'package:mad1_shopping_app/widgets/appdrawer.dart';
 
 import '../widgets/product_tile.dart';
 
@@ -33,6 +34,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppDrawer(),
       appBar: AppBar(
         title: Text(
           'Product Listing',
