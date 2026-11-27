@@ -1,3 +1,4 @@
+import 'package:mad1_shopping_app/models/product.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -62,7 +63,7 @@ class DbHelper {
     print("raw inserted");
   }
 
-  static void queryProductsRaw() async {
+  static Future<List<Map<String, dynamic>>> queryProductsRaw() async {
     //open db + query
     var db = await openDb();
     var result = await db.rawQuery('SELECT * FROM $tbPName');
@@ -70,18 +71,40 @@ class DbHelper {
     //   print(item['key']);
     // });
     print(result);
+    return result;
   }
 
-  static void insertProduct() async {
+  static Future<List<Map<String, dynamic>>> queryProducts() async {
+    var db = await openDb();
+    var result = await db.query(
+      tbPName,
+      columns: [colPName, colPDesc, colPPrice],
+    );
+    print(result);
+    return result;
+  }
+
+  static Future<int> insertProduct(Product product) async {
     //open db + insert
     var db = await openDb();
     int id = await db.insert(tbPName, {
-      colPName: 'Samsung Galaxy',
-      colPDesc: 'Galaxy 21',
-      colPPrice: 80000,
-      // colPImage : '',
+      colPName: product.name,
+      colPDesc: product.description,
+      colPPrice: product.price,
+      colPImage: product.imageUrl,
       colPIsFav: 0,
     });
     print('inserted product with id $id');
+    return id;
+  }
+
+  static Future<int> deleteProductRaw(int id) async {
+    var db = await openDb();
+    return await db.rawDelete('DELETE FROM $tbPName WHERE $colPId = $id');
+  }
+
+  static Future<int> deleteProduct(int id) async {
+    var db = await openDb();
+    return await db.delete(tbPName, where: '$colPId = ?', whereArgs: [id]);
   }
 }

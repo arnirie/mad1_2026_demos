@@ -14,6 +14,15 @@ class Product {
     this.imageUrl,
   });
 
+  //named constructor
+  Product.empty({
+    this.id = 0,
+    required this.name,
+    required this.description,
+    required this.price,
+    this.imageUrl,
+  });
+
   void toggleFavorite() {
     isFavorite = !isFavorite;
   }
