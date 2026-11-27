@@ -58,6 +58,7 @@ class DbHelper {
         'iphone 17 pro max', 99000, NULL, 0
       );
     ''');
+    // db.execute('');
     print("raw inserted");
   }
 
@@ -69,5 +70,18 @@ class DbHelper {
     //   print(item['key']);
     // });
     print(result);
+  }
+
+  static void insertProduct() async {
+    //open db + insert
+    var db = await openDb();
+    int id = await db.insert(tbPName, {
+      colPName: 'Samsung Galaxy',
+      colPDesc: 'Galaxy 21',
+      colPPrice: 80000,
+      // colPImage : '',
+      colPIsFav: 0,
+    });
+    print('inserted product with id $id');
   }
 }

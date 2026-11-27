@@ -7,6 +7,7 @@ class ProductAddEditScreen extends StatelessWidget {
 
   void save() {
     // DbHelper.insertProductRaw();
+    DbHelper.insertProduct();
     DbHelper.queryProductsRaw();
   }
 
